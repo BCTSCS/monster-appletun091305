@@ -10,6 +10,8 @@ public class SimpleServer {
     public SimpleServer(int port) throws IOException {
         serverSocket = new ServerSocket(port);
         System.out.println("Server started and listening "+port);
+        out = serverSocket.getOutputStream();
+        in = serverSocket.getInputStream();
     }
 
     public void acceptClient() {
