@@ -19,24 +19,26 @@ public class SimpleClient {
     }
 
     public String receiveMessage() { 
-        if (in.hasNextLine()) {
-            return in.nextLine();
-        }
-        return null;
+        return in.nextLine();
     }
 
     public void close() {
-
+        out.close();
+        in.close();
     }
 
     public static void main(String[] args) throws IOException {
         SimpleClient s = new SimpleClient("127.0.0.1", 8888);
         FileOperator file = new FileOperator("client.txt");
         while (true) {
-            s.sendMessage(file.readLine());
+            String message = file.readLine();
+            s.sendMessage(message);
+            if (message.equals("exit")) {break;}
+            System.out.println("Me: "+message);
+
             String reply = s.receiveMessage();
-            System.out.println(reply+" ");
-            if (reply.equals("stop")) {break;}
+            System.out.println("Server: "+reply);
         }
+        s.close();
     }
 }

@@ -19,7 +19,7 @@ public class SimpleServer {
         InputStream i = socket.getInputStream();
         OutputStream o = socket.getOutputStream();
         in = new Scanner(i);
-        out = new PrintWriter(out);
+        out = new PrintWriter(o);
     }
 
     public String receiveMessage() {
@@ -36,11 +36,15 @@ public class SimpleServer {
         try {
             SimpleServer s = new SimpleServer(8888);
             s.acceptClient();
+            FileOperator file = new FileOperator("server.txt");
             while (true) {
-                s.sendMessage("Hello ");
-                String reply = s.receiveMessage();
-                System.out.println(reply+" ");
-                if (reply.equals("stop")) {break;}
+                String user = s.receiveMessage();
+                System.out.println("User: "+user);
+                if (user.equals("exit")) {break;}
+                
+                String response = file.readLine();
+                s.sendMessage(response);
+                System.out.println("Us: "+response);
             }
         } catch(Exception e) {
             System.out.println("Exception occured");
