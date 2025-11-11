@@ -2,4 +2,4 @@ Here's a bunch of text
 that reads like a chat
 woah
 hey !
-thats cool. pretty rad
+exit
